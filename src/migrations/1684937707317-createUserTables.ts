@@ -1,0 +1,21 @@
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+export class createUserTables1684937707317 implements MigrationInterface {
+  name = 'createUserTables1684937707317';
+
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `ALTER TABLE "courses" RENAME COLUMN "course" TO "name"`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE "user"`);
+    await queryRunner.query(
+      `ALTER TABLE "courses" RENAME COLUMN "name" TO "course"`,
+    );
+  }
+}
