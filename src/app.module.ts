@@ -5,10 +5,10 @@ import { CoursesModule } from './courses/courses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
-    CoursesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -18,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
       database: 'postgres',
       autoLoadEntities: true,
     }),
+    CoursesModule,
     UserModule,
     AuthModule,
   ],
