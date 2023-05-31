@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
@@ -19,12 +19,14 @@ export class AuthService {
 
     const verify = await compare(pass, user.password);
 
-    if (!verify) throw new UnauthorizedException();
+    if (!verify) throw new HttpException('Credenciais Incorretas.', 200);
 
     const payload = { sub: user.id, username: user.name };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
+      userName: user.name,
+      id: user.id,
     };
   }
 }
