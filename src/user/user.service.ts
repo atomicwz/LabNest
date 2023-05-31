@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -34,7 +39,18 @@ export class UserService {
   }
 
   async create(createUserData: CreateUserDto) {
+    const userAlreadyRegistred = await this.userRepository.findOne({
+      email: createUserData.email,
+    });
+
+    if (userAlreadyRegistred)
+      throw new HttpException(
+        'Este email já foi cadastrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+
     const user = this.userRepository.create(createUserData);
+
     const hashedPassword = await hash(createUserData.password, 8);
     return this.userRepository.save({
       ...user,
