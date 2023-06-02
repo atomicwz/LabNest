@@ -8,8 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { hash } from 'bcryptjs';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -58,12 +58,17 @@ export class UserService {
     });
   }
 
-  update(id: string, updateUser: UpdateUserDto) {
-    if (!updateUser) {
+  async update(id: string, updateUser: UpdateUserDto) {
+    if (!id) {
       throw new NotFoundException(`Usuário não encontrado. ID: ${id}`);
     }
 
-    return this.userRepository.save(updateUser);
+    const user = {
+      email: updateUser.email,
+      name: updateUser.name,
+    };
+
+    return this.userRepository.save({ id: id, ...user });
   }
 
   async remove(id: string) {

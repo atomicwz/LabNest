@@ -19,7 +19,7 @@ export class AuthService {
 
     const verify = await compare(pass, user.password);
 
-    if (!verify) throw new HttpException('Credenciais Incorretas.', 200);
+    if (!verify) throw new HttpException('Credenciais Incorretas.', 401);
 
     const payload = { sub: user.id, username: user.name };
 
