@@ -23,7 +23,7 @@ export class UserService {
   }
 
   async findAllAdmins(id: string) {
-    const userAdmin = await this.userRepository.find({
+    const userAdmin = await this.userRepository.findOne({
       id: id,
       isAdmin: true,
     });
@@ -32,6 +32,7 @@ export class UserService {
         'O usuário não é administrador.',
         HttpStatus.FORBIDDEN,
       );
+
     return this.userRepository.find({ isAdmin: true });
   }
 

@@ -21,7 +21,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('admin')
+  @Get('admin/:id')
   findAllAdmin(@Param('id') id: string) {
     return this.userService.findAllAdmins(id);
   }
