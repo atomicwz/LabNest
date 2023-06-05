@@ -19,7 +19,20 @@ export class UserService {
   ) {}
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({ isAdmin: false });
+  }
+
+  async findAllAdmins(id: string) {
+    const userAdmin = await this.userRepository.find({
+      id: id,
+      isAdmin: true,
+    });
+    if (!userAdmin)
+      throw new HttpException(
+        'O usuário não é administrador.',
+        HttpStatus.FORBIDDEN,
+      );
+    return this.userRepository.find({ isAdmin: true });
   }
 
   async findOne(id: string) {
@@ -50,6 +63,41 @@ export class UserService {
       );
 
     const user = this.userRepository.create(createUserData);
+
+    const hashedPassword = await hash(createUserData.password, 8);
+    return this.userRepository.save({
+      ...user,
+      isAdmin: false,
+      password: hashedPassword,
+    });
+  }
+
+  async createAdmin(id: string, createUserData: CreateUserDto) {
+    const userAdmin = await this.userRepository.findOne({
+      id: id,
+      isAdmin: true,
+    });
+
+    if (!userAdmin)
+      throw new HttpException(
+        'O usuário não é administrador.',
+        HttpStatus.FORBIDDEN,
+      );
+
+    const userAlreadyRegistred = await this.userRepository.findOne({
+      email: createUserData.email,
+    });
+
+    if (userAlreadyRegistred)
+      throw new HttpException(
+        'Este email já foi cadastrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+
+    const user = this.userRepository.create({
+      ...createUserData,
+      isAdmin: true,
+    });
 
     const hashedPassword = await hash(createUserData.password, 8);
     return this.userRepository.save({

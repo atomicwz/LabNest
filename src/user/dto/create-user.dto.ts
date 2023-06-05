@@ -1,6 +1,7 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
+  @MaxLength(30)
   @IsString()
   readonly name: string;
 

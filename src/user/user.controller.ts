@@ -21,6 +21,11 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('admin')
+  findAllAdmin(@Param('id') id: string) {
+    return this.userService.findAllAdmins(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
@@ -30,6 +35,11 @@ export class UserController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
+  }
+
+  @Post('admin/:id')
+  createAdmin(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
+    return this.userService.createAdmin(id, createUserDto);
   }
 
   @Public()
