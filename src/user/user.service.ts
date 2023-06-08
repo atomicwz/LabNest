@@ -69,7 +69,7 @@ export class UserService {
     const hashedPassword = await hash(createUserData.password, 8);
     return this.userRepository.save({
       ...user,
-      isAdmin: true,
+      isAdmin: false,
       password: hashedPassword,
     });
   }
