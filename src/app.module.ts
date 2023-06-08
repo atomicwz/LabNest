@@ -19,7 +19,7 @@ dotenv.config();
       password: process.env.PASSWORD || 'taRzczT9RSZW4DxUfZurRlLjsxW3intY',
       database: process.env.DATABASE || 'dash_z5xn',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: process.env.DATABASE && true,
     }),
     CoursesModule,
     UserModule,
