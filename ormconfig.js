@@ -1,10 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 module.exports = {
   type: 'postgres',
-  host: 'dpg-ci0ti4g2qv21rs7kqh3g-a',
+  host: process.env.HOST || 'localhost',
   port: 5432,
-  username: 'taRzczT9RSZW4DxUfZurRlLjsxW3intY',
-  password: 'fish',
-  database: 'dash_z5xn',
+  username: process.env.USERDB || 'fish',
+  password: process.env.PASSWORD || 'fish',
+  database: process.env.DATABASE || 'dash',
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/migrations/*.js'],
   cli: {

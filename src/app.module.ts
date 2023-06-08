@@ -5,16 +5,18 @@ import { CoursesModule } from './courses/courses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'dpg-ci0ti4g2qv21rs7kqh3g-a',
+      host: process.env.HOST || 'localhost',
       port: 5432,
-      username: 'fish',
-      password: 'taRzczT9RSZW4DxUfZurRlLjsxW3intY',
-      database: 'dash_z5xn',
+      username: process.env.USERDB || 'fish',
+      password: process.env.PASSWORD || 'fish',
+      database: process.env.DATABASE || 'dash',
       autoLoadEntities: true,
     }),
     CoursesModule,
