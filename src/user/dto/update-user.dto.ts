@@ -6,4 +6,7 @@ export class UpdateUserDto {
 
   @IsEmail()
   readonly email: string;
+
+  @IsString()
+  readonly avatar: string | null;
 }

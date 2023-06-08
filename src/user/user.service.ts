@@ -10,6 +10,7 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hash } from 'bcryptjs';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { HelperFile } from '../config/helper';
 
 @Injectable()
 export class UserService {
@@ -128,5 +129,23 @@ export class UserService {
     }
 
     return this.userRepository.remove(user);
+  }
+
+  async updateAvatar(id: string, file: string, fileName: string) {
+    const userAvatar = await this.userRepository.findOne(id);
+
+    if (userAvatar.avatar === null || userAvatar.avatar === '') {
+      await this.userRepository.update(id, {
+        avatar: file,
+      });
+    } else {
+      await HelperFile.removeFile(userAvatar.avatar);
+      await this.userRepository.update(id, {
+        avatar: file,
+      });
+    }
+    const user = await this.userRepository.findOne(id);
+
+    return user;
   }
 }
