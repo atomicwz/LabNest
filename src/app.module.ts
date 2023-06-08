@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgres://fish:taRzczT9RSZW4DxUfZurRlLjsxW3intY@dpg-ci0ti4g2qv21rs7kqh3g-a.oregon-postgres.render.com/dash_z5xn',
+      host: 'postgres://fish:taRzczT9RSZW4DxUfZurRlLjsxW3intY@dpg-ci0ti4g2qv21rs7kqh3g-a/dash_z5xn',
       port: 5432,
       username: 'fish',
       password: 'taRzczT9RSZW4DxUfZurRlLjsxW3intY',
