@@ -10,11 +10,11 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'dpg-ci0ti4g2qv21rs7kqh3g-a',
       port: 5432,
       username: 'fish',
-      password: 'fish',
-      database: 'dash',
+      password: 'taRzczT9RSZW4DxUfZurRlLjsxW3intY',
+      database: 'dash_z5xn',
       autoLoadEntities: true,
     }),
     CoursesModule,
